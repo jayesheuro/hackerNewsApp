@@ -1,0 +1,11 @@
+.newsBox {
+  margin: 1rem 0;
+  border-bottom: 1px solid gray;
+  padding: 2rem 1rem;
+  .buttonLink {
+    text-decoration: none;
+    .knowMoreButton {
+      margin-top: 1rem;
+    }
+  }
+}
