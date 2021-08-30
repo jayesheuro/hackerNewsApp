@@ -21,8 +21,8 @@ function App() {
         setLoading(false);
         setNewsData(result.data.hits);
         // setPageNumber(result.data.page);
-        window.localStorage.setItem("news", JSON.stringify(result.data.hits));
-        window.localStorage.setItem("query", query);
+        window.sessionStorage.setItem("news", JSON.stringify(result.data.hits));
+        window.sessionStorage.setItem("query", query);
         console.log(result.data.hits);
       })
       .catch((err) => {
@@ -45,9 +45,9 @@ function App() {
     setPageNumber(pageNumber + 1);
   };
   useEffect(() => {
-    if (window.localStorage.getItem("news")) {
-      setNewsData(JSON.parse(window.localStorage.getItem("news")));
-      setQuery(window.localStorage.getItem("query"));
+    if (window.sessionStorage.getItem("news")) {
+      setNewsData(JSON.parse(window.sessionStorage.getItem("news")));
+      setQuery(window.sessionStorage.getItem("query"));
     }
   }, []);
 
@@ -91,29 +91,31 @@ function App() {
         </div>
       )}
 
-      <div className="navigate">
-        <Button
-          variant="contained"
-          className="prevButton"
-          color="secondary"
-          disabled={pageNumber === 0}
-          onClick={handlePrev}
-        >
-          Prev
-        </Button>
-        <span>
-          Showing page <b>{pageNumber + 1}</b> of 20
-        </span>
-        <Button
-          variant="contained"
-          className="nextButton"
-          color="primary"
-          disabled={pageNumber === 19}
-          onClick={handleNext}
-        >
-          Next
-        </Button>
-      </div>
+      {newsData.length > 0 && (
+        <div className="navigate">
+          <Button
+            variant="contained"
+            className="prevButton"
+            color="secondary"
+            disabled={pageNumber === 0}
+            onClick={handlePrev}
+          >
+            Prev
+          </Button>
+          <span>
+            Showing page <b>{pageNumber + 1}</b> of 20
+          </span>
+          <Button
+            variant="contained"
+            className="nextButton"
+            color="primary"
+            disabled={pageNumber === 19}
+            onClick={handleNext}
+          >
+            Next
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
