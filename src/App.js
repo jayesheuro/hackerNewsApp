@@ -9,20 +9,31 @@ import { PushSpinner } from "react-spinners-kit";
 
 function App() {
   const [query, setQuery] = useState("");
-  const [newsData, setNewsData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
-
+  const [data, setData] = useState({
+    allNews: [],
+    totalResults: 0,
+    totalPages: 0,
+  });
   const getNewsData = async (p) => {
     setLoading(true);
     await axios
       .get(`http://hn.algolia.com/api/v1/search?query=${query}&page=${p}`)
       .then((result) => {
         setLoading(false);
-        setNewsData(result.data.hits);
+        // setNewsData(result.data.hits);
+        setData({
+          allNews: result.data.hits,
+          totalResults: result.data.nbHits,
+          totalPages: result.data.nbPages,
+        });
         // setPageNumber(result.data.page);
         window.sessionStorage.setItem("news", JSON.stringify(result.data.hits));
         window.sessionStorage.setItem("query", query);
+        window.sessionStorage.setItem("totalResults", result.data.nbHits);
+        window.sessionStorage.setItem("totalPages", result.data.nbPages);
+
         console.log(result.data.hits);
       })
       .catch((err) => {
@@ -46,7 +57,11 @@ function App() {
   };
   useEffect(() => {
     if (window.sessionStorage.getItem("news")) {
-      setNewsData(JSON.parse(window.sessionStorage.getItem("news")));
+      setData({
+        allNews: JSON.parse(window.sessionStorage.getItem("news")),
+        totalResults: window.sessionStorage.getItem("totalResults"),
+        totalPages: window.sessionStorage.getItem("totalPages"),
+      });
       setQuery(window.sessionStorage.getItem("query"));
     }
   }, []);
@@ -85,13 +100,19 @@ function App() {
         </div>
       ) : (
         <div className="searchResults">
-          {newsData.map((news) => (
+          {data.allNews.length > 0 && (
+            <h2>
+              Found {data.totalResults} results for keyword {query}
+            </h2>
+          )}
+
+          {data.allNews.map((news) => (
             <News key={news.objectID} news={news} />
           ))}
         </div>
       )}
 
-      {newsData.length > 0 && (
+      {data.allNews.length > 0 && (
         <div className="navigate">
           <Button
             variant="contained"
@@ -103,7 +124,7 @@ function App() {
             Prev
           </Button>
           <span>
-            Showing page <b>{pageNumber + 1}</b> of 20
+            Showing page <b>{pageNumber + 1}</b> of {data.totalPages}
           </span>
           <Button
             variant="contained"
