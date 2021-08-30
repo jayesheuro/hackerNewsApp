@@ -4,7 +4,6 @@ import { useLocation, useHistory } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 import { PushSpinner } from "react-spinners-kit";
-import ReactMarkdown from "react-markdown";
 import { Button } from "@material-ui/core";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import "./NewsDetail.scss";
@@ -13,7 +12,7 @@ const NewsDetail = () => {
   const params = new URLSearchParams(useLocation().search);
   const objectID = params.get("id");
   const history = useHistory();
-  const [newsDetail, setNewsDetail] = useState();
+  // const [newsDetail, setNewsDetail] = useState();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
     title: "No Title Found",
@@ -28,7 +27,7 @@ const NewsDetail = () => {
         .then((result) => {
           setLoading(false);
           console.log(result.data);
-          setNewsDetail(result.data);
+          // setNewsDetail(result.data);
           setData({
             title: result.data.title ? result.data.title : "No title found",
             points: result.data.points ? result.data.points : "No points found",
