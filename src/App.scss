@@ -1,58 +1,121 @@
-.pageHeader {
-  text-align: center;
-}
-.loader {
-  color: white !important;
-  width: 2rem !important;
-}
-.searchBox {
-  margin: 2rem 0;
-  .searchForm {
+.App {
+  .navbar {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    max-width: 60vw;
-    margin: 0 auto;
-    .searchField {
-      flex: 0.5;
-      height: 3rem;
-      font-size: 1.2rem;
-      border: none;
-      padding-left: 1.5rem;
-      background-color: rgb(182, 214, 224);
-      border-radius: 50px;
-      &:focus {
-        outline: none !important;
-      }
+    justify-content: space-between;
+    margin: 2rem;
+    .logo {
+      font-size: 1.5rem;
+      // font-style: italic;
+      color: white;
     }
-    .searchButton {
-      flex: 0.3;
-      font-size: 1.1rem;
-      text-transform: none;
-      height: 3rem;
-      border-radius: 50px;
-      transition: transform 0.3s ease;
-      &:hover {
-        transform: scale(1.1);
+    .links {
+      a {
+        text-decoration: none;
+        color: white;
+        margin: 0 2rem;
+        &:hover {
+          text-decoration: underline;
+        }
       }
     }
   }
-}
-.loaderWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 10rem;
-}
-.searchResults {
-  max-width: 60vw;
-  margin: 5rem auto;
-  background-color: rgb(224, 223, 223);
-}
-.navigate {
-  width: 30vw;
-  align-items: center;
-  margin: 4rem auto;
-  display: flex;
-  justify-content: space-around;
+  .pageHeader {
+    margin-top: 4rem;
+    text-align: center;
+    color: white;
+    font-size: 3.5rem;
+    font-weight: 600;
+  }
+  .searchBox {
+    margin: 2rem 0;
+    .searchForm {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      max-width: 60vw;
+      margin: 0 auto;
+      .searchField {
+        flex: 0.5;
+        height: 3rem;
+        font-size: 1.2rem;
+        border: none;
+        padding-left: 1rem;
+        background-color: #ccb194;
+        border-radius: 10px;
+        &:focus {
+          outline: none !important;
+        }
+        &::placeholder {
+          padding-left: -10px;
+          color: black;
+          opacity: 0.8; /* Firefox */
+        }
+      }
+      .searchButton {
+        flex: 0.3;
+        font-size: 1.2rem;
+        text-transform: none;
+        height: 3rem;
+        border-radius: 10px;
+        background-color: #dd963e;
+        transition: transform 0.3s ease;
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+  .loaderWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10rem;
+  }
+  .searchResults {
+    margin-top: 6rem;
+    .countHeader {
+      color: rgba(255, 255, 255, 0.473);
+      font-size: 1.5rem;
+      font-style: italic;
+      text-align: left;
+      padding-left: 2rem;
+      font-weight: 400;
+    }
+    .newsCards {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+    // margin: 5rem 3rem;
+    // background-color: rgb(224, 223, 223);
+  }
+  .navigate {
+    width: 30vw;
+    align-items: center;
+    margin: 4rem auto;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    .text {
+      color: white;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+    .prevButton,
+    .nextButton {
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(30px);
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 20px;
+      transition: transform 0.3s ease;
+      border-radius: 50px;
+      height: 3rem;
+      width: 3rem;
+      &:hover {
+        transform: scale(1.1);
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+    }
+  }
 }

@@ -7,7 +7,8 @@ const News = ({ news }) => {
     <div className="newsBox">
       <h2 className="newsTitle">{news.title}</h2>
       <span>
-        Author : {news.author} &nbsp;ObjectID : {news.objectID}
+        Author : {news.author}, &nbsp;Date posted :{" "}
+        {news.created_at.slice(0, 10)}
       </span>
       <br />
       <Link to={`/newsDetail?id=${news.objectID}`} className="buttonLink">

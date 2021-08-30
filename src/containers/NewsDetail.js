@@ -12,7 +12,6 @@ const NewsDetail = () => {
   const params = new URLSearchParams(useLocation().search);
   const objectID = params.get("id");
   const history = useHistory();
-  // const [newsDetail, setNewsDetail] = useState();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
     title: "No Title Found",
@@ -46,33 +45,40 @@ const NewsDetail = () => {
     <div className="wrapper">
       <Button
         variant="contained"
-        color="primary"
+        className="backButton"
         onClick={() => history.push("/")}
       >
         <KeyboardBackspaceIcon />
       </Button>
-      <span> Back to search results</span>
       {loading ? (
         <div className="loaderWrapper">
-          <PushSpinner color="#000" />
+          <PushSpinner color="white" />
         </div>
       ) : (
         <div className="details">
-          <h1>
-            News Title : <i>{data.title}</i>
-          </h1>
-          <h1>
-            Points : <i>{data.points}</i>
-          </h1>
-          <h1>Comments</h1>
-          <ul className="commentsList">
-            {data.children.map((comment) => (
-              <li
-                key={comment.id}
-                dangerouslySetInnerHTML={{ __html: comment.text }}
-              ></li>
-            ))}
-          </ul>
+          <h1 className="newsTitle">{data.title}</h1>
+
+          <div className="detailBox">
+            <div className="headerDiv">
+              <h1 className="header">Comments</h1>
+              <h1 className="header">
+                News points : <i>{data.points}</i>
+              </h1>
+            </div>
+            <div className="comments">
+              <ul className="commentsList">
+                {data.children.map(
+                  (comment) =>
+                    comment.text && (
+                      <li
+                        key={comment.id}
+                        dangerouslySetInnerHTML={{ __html: comment.text }}
+                      ></li>
+                    )
+                )}
+              </ul>
+            </div>
+          </div>
         </div>
       )}
     </div>

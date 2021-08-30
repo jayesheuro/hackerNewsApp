@@ -6,7 +6,8 @@ import "./App.scss";
 import News from "./components/News";
 import { useEffect } from "react";
 import { PushSpinner } from "react-spinners-kit";
-
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 function App() {
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
@@ -16,6 +17,7 @@ function App() {
     totalResults: 0,
     totalPages: 0,
   });
+  const [apiQuery, setApiQuery] = useState("");
   const getNewsData = async (p) => {
     setLoading(true);
     await axios
@@ -28,6 +30,8 @@ function App() {
           totalResults: result.data.nbHits,
           totalPages: result.data.nbPages,
         });
+
+        setApiQuery(result.data.query);
         // setPageNumber(result.data.page);
         window.sessionStorage.setItem("news", JSON.stringify(result.data.hits));
         window.sessionStorage.setItem("query", query);
@@ -68,9 +72,15 @@ function App() {
 
   return (
     <div className="App">
-      <h1 className="pageHeader">
-        <i>Get latest NEWS from Hacker News</i>
-      </h1>
+      <div className="navbar">
+        <div className="logo">HackerNews App</div>
+        <div className="links">
+          <a href="#About">About</a>
+          <a href="#Blog">Blog</a>
+          <a href="#Contactus">Contact us</a>
+        </div>
+      </div>
+      <h1 className="pageHeader">Get latest NEWS from Hacker News</h1>
       <div className="searchBox">
         <form className="searchForm" onSubmit={handleSearch}>
           <input
@@ -79,14 +89,9 @@ function App() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-          <Button
-            className="searchButton"
-            type="submit"
-            variant="contained"
-            color="primary"
-          >
+          <Button className="searchButton" type="submit" variant="contained">
             {loading ? (
-              <CircularProgress size={30} style={{ color: "white" }} />
+              <CircularProgress size={30} style={{ color: "#fff" }} />
             ) : (
               "Search News"
             )}
@@ -96,19 +101,22 @@ function App() {
 
       {loading ? (
         <div className="loaderWrapper">
-          <PushSpinner color="#000" />
+          <PushSpinner color="white" />
         </div>
       ) : (
         <div className="searchResults">
           {data.allNews.length > 0 && (
-            <h2>
-              Found {data.totalResults} results for keyword {query}
+            <h2 className="countHeader">
+              Found{" "}
+              <span style={{ color: "#dd963e" }}>{data.totalResults}</span>{" "}
+              results for keyword "{apiQuery || query}" -
             </h2>
           )}
-
-          {data.allNews.map((news) => (
-            <News key={news.objectID} news={news} />
-          ))}
+          <div className="newsCards">
+            {data.allNews.map((news) => (
+              <News key={news.objectID} news={news} />
+            ))}
+          </div>
         </div>
       )}
 
@@ -117,23 +125,21 @@ function App() {
           <Button
             variant="contained"
             className="prevButton"
-            color="secondary"
             disabled={pageNumber === 0}
             onClick={handlePrev}
           >
-            Prev
+            <ArrowBackIosIcon />
           </Button>
-          <span>
+          <span className="text">
             Showing page <b>{pageNumber + 1}</b> of {data.totalPages}
           </span>
           <Button
             variant="contained"
             className="nextButton"
-            color="primary"
             disabled={pageNumber === 19}
             onClick={handleNext}
           >
-            Next
+            <ChevronRightIcon fontSize="large" />
           </Button>
         </div>
       )}
