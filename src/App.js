@@ -5,6 +5,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import "./App.scss";
 import News from "./components/News";
 import { useEffect } from "react";
+import { PushSpinner } from "react-spinners-kit";
 
 function App() {
   const [query, setQuery] = useState("");
@@ -79,7 +80,9 @@ function App() {
       </div>
 
       {loading ? (
-        <CircularProgress size={30} style={{ color: "white" }} />
+        <div className="loaderWrapper">
+          <PushSpinner color="#000" />
+        </div>
       ) : (
         <div className="searchResults">
           {newsData.map((news) => (

@@ -38,6 +38,12 @@
     }
   }
 }
+.loaderWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10rem;
+}
 .searchResults {
   max-width: 60vw;
   margin: 5rem auto;
